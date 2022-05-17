@@ -31,7 +31,7 @@ app.post('/addemp',(req,res)=>{
     db.collection('emp').insertOne(req.body);
     res.end('inserted');
 });
-app.put('/updateemp/:id',(req,res)=>{
+app.put('/updateemp/:id',verifyToken,(req,res)=>{
     db.collection('emp').updateOne({_id:parseInt(req.params.id)},{$set:{name:req.body.name,age:req.body.age}});
     res.write("Updated");
 });
@@ -46,7 +46,7 @@ app.post("/login",(req,res)=>
 {
     uname=req.body.username;
     pwd=req.body.password;
-    db.collection('emp').findOne({username:uname,password:pwd}).then((result)=>
+    db.collection('users').findOne({username:uname,password:pwd}).then((result)=>
     {
         if(result)
         {
